@@ -56,4 +56,35 @@
 
 #### $L_1$ and $L_2$ norms
 * Norm: length of vectors
-* 
+* $L_2$ norm (aka. Euclidean distance)
+  * $||a|| = ||a||_2 \equiv \sqrt{a_1^2 + ... + a_n^2}$
+* $L_1$ norm (aka. Manhattan distance)
+  * $||a||_1 \equiv |a_1| + ... + |a_n|$
+* E.g. Sum of squared errors:
+  * $L = \sum_{i=1}^n (y_i - \sum_{j=0}^{m}X_{ij}\beta_{j})^2 = ||y - X\beta||^2$
+
+#### Linear Regression optimization: Least Square Method
+* To find $\beta$, minimize the **sum of squared errors**:
+  * $SSE = \sum_{i=1}^n (y_i - \sum_{j=0}^m X_{ij}\beta_{j})^2$
+* Setting derivative to zero and solve for $\beta$: (normal equation)
+  * $b = (X^TX)^{-1}X^{T}y$
+
+---
+
+### Lecture 4: Logistic Regression & Basis Expansion
+
+#### Logistic Regression
+* Why not linear regression for classification?
+  * Predict "Yes" if $s \geq 0.5$
+  * Predict "No" if $s < 0.5$
+  * Reason:
+    * Can be susceptible (易受影响) to outliers
+    * least-squares criterion looks **unnatural** in this setting
+* Problem: the probability needs to be between 0 and 1
+* Logistic function
+  * $f(s) = \frac{1}{1+\text{exp}(-s)}$
+* Logistic regression model:
+  * $P(Y=1|x) = \frac{1}{1+\text{exp}(-x^T\beta)}$
+  * In GLM:
+    * Mean: $\mu = P(Y=1 | x)$
+    * Link function: $g(\mu) = $ (log odds)

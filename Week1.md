@@ -33,15 +33,15 @@ Probability相关的部分就不写了
   * Classes of models indexed by parameters
   * Point estimate: a function (or statistic) of data (samples)
 * If T is an estimator for $\theta$
-  * Bias: $Bias_{\theta}(T) = E_{\theta}[T] - \theta$
-  * Variance: $Var_{\theta}(T) = E_{\theta}[(T - E_{\theta}[T])^2]$
+  * Bias: $Bias_{\theta}(\hat{\theta}) = E_{\theta}[\hat{\theta}] - \theta$
+  * Variance: $Var_{\theta}(\hat{\theta}) = E_{\theta}[(\hat{\theta} - E_{\theta}[\hat{\theta}])^2]$
 * Asymptotic properties:
-  * Consistency: $T \rightarrow \theta$ (converges in probability) as $n \rightarrow \infty$
+  * Consistency: $\hat{\theta} \rightarrow \theta$ (converges in probability) as $n \rightarrow \infty$
   * Efficiency: asymptotic variance is as small as possible
 * Maximum-Likelihood Estimation (MLE)
   * General principle for designing estimators
   * Involves optimisation
-  * $T \in \argmax_{\theta \in \Theta} \prod_{i=1}^{n} p_{\theta}(x_i)$
+  * $\hat{\theta} \in \argmax_{\theta \in \Theta} \prod_{i=1}^{n} p_{\theta}(x_i)$
   * MLE estimators are consistent (but usually biased)
   * "Algorithm":
     1. Given data $X_1, ..., X_n$
@@ -54,7 +54,7 @@ Probability相关的部分就不写了
 * Decision rule: $\delta(x) \in A$ (action space)
   * E.g. point estimate, out-of-sample prediction
 * Loss function $l(a, \theta)$: economic cost, error metric
-  * E.g. square loss $(T - \theta)^2$, 0-1 loss $I(y \neq \hat{y})$
+  * E.g. square loss $(\hat{\theta} - \theta)^2$, 0-1 loss $I(y \neq \hat{y})$
 
 #### Risk & Empirical Risk Minimization (ERM)
 * In decision theory, really care about **expected loss**
@@ -66,4 +66,48 @@ Probability相关的部分就不写了
   * Don't know the real distribution the samples comes from, therefore don't now $E(X)$
 * **ERM**
   * Use training set X to approximate $p_\theta$
-  * Minimise empirical risk $\hat{R}_\theta[\delta] = \frac{1}{n} \sum_{i=1}^n $
+  * Minimise empirical risk $\hat{R}_\theta[\delta] = \frac{1}{n} \sum_{i=1}^n l(\delta(X_i), \theta)$
+
+#### Mean Squared Error
+* Bias-variance decomposition of **square-loss risk**
+* $E_{\theta}[(\theta - \hat{\theta})^2] = [Bias(\hat{\theta})]^2 + Var_{\theta}(\hat{\theta})$
+
+#### Bayesian Statistics
+* Unknown params have associated distributions reflecting prior **belief**
+* Prior distribution $P(\theta)$
+  * Params are modeled like r.v.'s
+  * Data likelihood $P_{\theta}(X)$ written as conditional $P(X|\theta)$
+* Rather than point estimate $\hat{\theta}$
+  * Bayesians update prior belief $P(\theta)$ with observed data to the posterior distribution: $P(\theta | X)$
+* Bayesian probabilistic inference
+  1. Start with prior $P(\theta)$ and likelihood $P(X|\theta)$
+  2. Observe data $X = x$
+  3. Update prior to posterior $P(\theta | X = x)$
+* Primary tools to obtain the posterior
+  * Bayes Rule: reverse order of conditioning
+    * $P(\theta | X = x) = \frac{P(X = x | \theta)P(\theta)}{P(X = x)}$
+  * Marginalization: eliminates unwanted variables
+    * $P(X = x) = \sum_t P(X = x, \theta = t)$
+* Bayesian estimation common approaches
+  * Posterior mean
+    * $E_{\theta | X}[\theta] = \int \theta P(\theta | X) d\theta$
+  * Posterior mode (MAP)
+    * $\argmax_\theta P(\theta | X)$
+
+#### Categories of Probabilistic Models
+* Parametric v.s. Non-Parametric
+  1. Parametric
+     * Determined by fixed, finite number of parameters
+     * Limited flexibility
+     * Efficient statistically and computationally
+  2. Non-Parametric
+     * Number of parameters grows with data, potentially infinite
+     * More flexible
+     * Less efficient
+* Generative v.s. Discriminative
+  1. Generative
+     * Model full joint $P(X,Y)$
+     * E.g. Naive Bayes
+  2. Discriminative
+     * Model conditional $P(Y|X)$ only
+     * E.g. Linear Regression

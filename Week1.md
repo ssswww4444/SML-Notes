@@ -51,3 +51,19 @@ Probability相关的部分就不写了
         * Solve $l'(\theta) = 0$
 
 #### Decision Theory
+* Decision rule: $\delta(x) \in A$ (action space)
+  * E.g. point estimate, out-of-sample prediction
+* Loss function $l(a, \theta)$: economic cost, error metric
+  * E.g. square loss $(T - \theta)^2$, 0-1 loss $I(y \neq \hat{y})$
+
+#### Risk & Empirical Risk Minimization (ERM)
+* In decision theory, really care about **expected loss**
+* **Risk** : $R_\theta[\delta] = E_{X \sim \theta}[l(\delta(X), \theta)]$
+  * Risk = Expected Loss
+  * aka. Generalization error
+* **Goal**: Choose $\delta$ (decision) to minimise $R_\theta[\delta]$
+  * Can't calculate risk directly
+  * Don't know the real distribution the samples comes from, therefore don't now $E(X)$
+* **ERM**
+  * Use training set X to approximate $p_\theta$
+  * Minimise empirical risk $\hat{R}_\theta[\delta] = \frac{1}{n} \sum_{i=1}^n $

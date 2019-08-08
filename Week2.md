@@ -110,7 +110,79 @@
   * E.g. Newton-Raphson, IRWLS, or gradient descent
 * Good news: it's a convex problem $\Rightarrow$ guaranteed to get global minimum
 
-#### Cross entropy
-* To compare models with different numbers of parameters in an all-subsets search, one may use an information theoretic criterion (e.g. AIC, BIC, ...) which estimates information divergence between true model and a given candidate model (working model)
+#### Information divergence
+* To **compare models** with different num of params in an all-subsets search
+* May use information theoretic criterion which estimates information divergence between true model and a given candidate model (working model)
 * Best model: **smallest** criterion value
-* 
+* E.g. Kullback-Leibler Information 
+  * $KL(f_1,f_2) = E_{f_1}[log \frac{f_2}{f_1}] = \int_{x} log \frac{f_2}{f_1}f(x) dx$
+  * Problem: don't know the true model $\Rightarrow$ cannot compute $KL$
+  * E.g. two binomial distribution: one for working model, one for true model
+    * Choose the model minimise $KL$
+
+#### Cross entropy
+* A method for comparing two distiributions
+* A measure of divergence between reference distribution $g_{ref}(a)$ and estiamted distribution $g_{est}(a)$
+  * For discrete distribution:
+    * $ H(g_{ref}, g_{est}) = -\sum_{a \in A} g_{ref}(a) log \, g_{est}(a) $
+
+#### Training as cross-entropy minimisation
+* Consider log-likelihood for a single data point
+    * $log \, p(y_i | x_i) = y_i log(\theta(x_i)) + (1 - y_i) log(1 - \theta(x_i))$
+* Negative cross entropy
+  * $H(g_{ref}, g_{est}) = -\sum_a g_{ref}(a) log \, g_{est}(a)$
+* Reference (true) distribution:
+  * $g_{ref}(1) = y_i$ and $g_{ref}(0) = 1 - y_i$
+* Estimate true distribution as:
+  * $g_{est}(1) = \theta(x_i)$ and $g_{est}(0) = 1 - \theta(x_i)$
+* Find $\beta$ that minimise sum of cross entropies per training point
+
+#### Basis Expansion (Data transformation)
+* Extend the utility of models via **data transformation**
+* For linear regression:
+  * Transformation data $\Rightarrow$ make data more linear!
+  * Map data onto another feature space s.t. data is linear in that space  
+    * $\mathbf{x}$: the original set of features
+    * $\phi$: $\R^m \rightarrow \R^k$ denotes transformation
+    * $\phi(\mathbf{x})$: new feature set
+* Polynomial regression:
+  * New features:
+    * $\phi_1(x) = x$
+    * $\phi_2(x) = x^2$
+  * Quadratic regression (linear in new feature set): 
+    * $y = w_0 + w_1 \phi_1(x) + w_2 \phi_2(x) = w_0 + w_1 x + w_2 x^2$
+* Canbe applied for both regression and classification
+* There are many possible choices of $\phi$
+* Binary classification:
+  * If dataset not linearly separable (non-linear problem)
+  * Define transformation as:
+    * $\phi_i(x) = ||x - z_i||$ (euclidean distance)
+      * where $z_i$ is some pre-defined **constants**
+      * Distances to each $z_i$ as new features
+
+## Radial basis functions (RBFs)
+* Motivated from approximiation theory
+* Sums of RBFs are used to **approximate given functions**
+* Radial basis functions:
+  * $\phi(x) = \psi(||x - z||)$, where $z$ is a constant
+* Examples:
+  * $\phi(x) = ||x - z||$
+  * $\phi(x) = \text{exp}(-\frac{1}{\sigma} ||x-z||^2)$
+
+#### Challenges of basis expansion (data transformation)
+* One limitation: the transformation needs to be defined beforehand
+  * Need to choose the **size** of new feature set
+  * If using  RBFs, need to choose $z_i$
+* Choosing $z_i$:
+  1. Uniformly spaced points (grids)
+  2. Cluster training data and use cluster centroids
+  3. Use training data $z_i \equiv x_i$ (some $x_i$)
+    * E.g. $\phi_i(x) = \psi(||x - x_i||)$
+    * For large datasets, this results in a **large number of features**
+
+#### Taking the idea of basis expansion to the next level
+* One idea: to learn the transformation $\phi$ from data
+  * E.g. Artificial Neural Networks
+* Another extension: use kernel trick
+* In **sparse kernel machines**, training dependes ony on a few data points
+  * E.g. SVM

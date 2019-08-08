@@ -87,4 +87,30 @@
   * $P(Y=1|x) = \frac{1}{1+\text{exp}(-x^T\beta)}$
   * In GLM:
     * Mean: $\mu = P(Y=1 | x)$
-    * Link function: $g(\mu) = $ (log odds)
+    * Link function: $g(\mu) = log \frac{P(Y=1 | x)}{P(Y=0 | x)} = \eta = x^T\beta$ (log odds)
+  * (Can use Cross-Validation to choose the threshold, usually just use 0.5)
+* Logistic regression is a linear classifier
+  * Logistic regression model:
+    * $P(Y = 1 | x) = \frac{1}{1 + \text{exp}(-x^T\beta)}$
+  * Classification rule:
+    * Class "1" if $P(Y=1 | x) > \frac{1}{2}$, else class "0"
+    * Decision boundary (line): $p = \frac{1}{1 + \text{exp}(-x^T\beta)} = \frac{1}{2}$
+    * (In higher dimensional problems, the decision boundary is a plane or hyperplane, vector $\beta$ is perpendicular to the decision boundary)
+
+#### Linear v.s. logistic probabilistic models
+* Linear regression
+  * Assume $\epsilon \sim N(0, \sigma^2)$
+  * Therefore assume $y \sim N(X\beta, \sigma^2)$
+* Logistic regression
+  * Assume $y \sim Bernoulli(p)$
+
+#### Logistic MLE
+* Doesn't have closed form solution (cannot solve $\frac{\partial L}{\partial \beta} = 0 $ directly)
+* Therefore use iterative optimisation
+  * E.g. Newton-Raphson, IRWLS, or gradient descent
+* Good news: it's a convex problem $\Rightarrow$ guaranteed to get global minimum
+
+#### Cross entropy
+* To compare models with different numbers of parameters in an all-subsets search, one may use an information theoretic criterion (e.g. AIC, BIC, ...) which estimates information divergence between true model and a given candidate model (working model)
+* Best model: **smallest** criterion value
+* 

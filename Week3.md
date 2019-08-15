@@ -89,3 +89,36 @@ $$
 * Note: regulariser $R(\theta)$ doesn't depend on data
 * Use held-out validation / cross validation to choose $\lambda$
 
+#### Regulariser as a constraint
+* Modified problem: 
+  * minimise $||y - Xw||_2^2$ subject to $||w||_2^2 \leq \lambda$ for $\lambda > 0$ 
+  ![CONSTRAINT](constraint.png)
+  * $w^*$ is the solution
+  * Lasso encourages solution to sit on the axes
+    * Some of the weights are set to zero $\Rightarrow$ solution is sparse
+
+#### Closed form solutions
+1. Linear regression
+  $$
+    (X'X)^{-1}X'y
+  $$
+2. Ridge regression
+  $$
+    (X'X + \lambda I )^{-1}X'y
+  $$
+3. Lasso
+   * No closed-form solution, but solutions are sparse and suitable for high-dim data
+
+#### Bias-variance trade-off
+* Model complexity is a major factor that influences the ability of the model to **generalise**
+* Bias-variance decomposition
+  * Risk / test error = $Bias^2 + Variance + Irreducible Error$
+$$
+  E[l(Y, \hat{f}(X_0))] = (E[Y] - E[\hat{f}])^2 + Var[\hat{f}] + Var[Y]
+$$
+* Squared loss for supervised-regression
+$$
+  l(Y, \hat{{f}(X_0)}) = (Y - \hat{f}(X_0))^2
+$$
+* Simple model $\Rightarrow$ high bias, low variance
+* Complex model $\Rightarrow$ low bias, high variance

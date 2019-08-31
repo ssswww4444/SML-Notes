@@ -122,3 +122,58 @@ $$
 $$
 * Simple model $\Rightarrow$ high bias, low variance
 * Complex model $\Rightarrow$ low bias, high variance
+
+---
+
+### Lecture 6: Perceptron
+
+#### Artificial Neural Network
+* A network of processing elements
+  * Each element converts inputs to output
+  * Output: a (activation) function of a **weighted sum** of inputs (linear combination)
+* To use ANN, we need
+  * To design network topology
+  * Adjust weights to given data
+* Training an ANN $\Rightarrow$ adjusting weights for training data given a pre-defined network topology
+
+#### Perceptron
+* A binary classifier
+  * $s = \sum_{i = 0}^m x_i w_i$
+    * Predict class A if $s \geq 0$
+    * Predict class B if $s \leq 0$
+* Loss function
+  * Usually don't use 0-1 loss for training, since cannot calculate the gradient
+  * Shouldn't give penalty for correctly classified examples
+    * Penalty (loss) = $s$
+  * Can be re-written as $L(s,y) = max(0,-sy)$
+![PERCEPTRON](perceptron.png)
+
+#### Stochastic gradient descent (SGD)
+* Random: shuffling training examples
+* Randomly shuffle / split all training examples in B batches
+* Choose initial $\theta^{(1)}$
+* For $i$ from 1 to $T$ (epochs)
+   * For $j$ from 1 to $B$ (batches)
+      * Do gradient descent update **using data from batch $j$**
+* Advantage: computational feasibility for large datasets
+
+#### Perceptron training algorithm (SDG with batch size 1)
+* Choose initial guess $w^{(0)}$, $k=0$
+* For $i$ from 1 to $T$ (epochs)
+  * For $j$ from 1 to $N$ (training examples)
+    * Consider examples $\{\mathbf{x}_j, y_j \}$
+    * Update: $w^{(k++)} = w^{(k)} - \eta \nabla L(w^{(k)})$
+* Training rule (gradient descent)
+  * Correct: We have $\frac{\partial L}{\partial w_i} = 0$ when $sy > 0$
+  * Misclassified: We have $\frac{\partial L}{\partial w_i} = -x_i$ when y = 1 and $s < 0$
+  * Misclassified: We have $\frac{\partial L}{\partial w_i} = x_i$ when y = -1 and $s > 0$
+  * For sy = 0, we can do either of these (doesn't matter)
+* When classified correctly, weights are unchanged
+* When misclassified, update: $\mathbf{w}^{(k+1)} += -\eta(\pm \mathbf{x})$
+  * $\pm x$ is gradient
+* **Convergence theorem:** if the trianing data is linearly separable, the algorithm is guaranteed to **converge to a solution**. This is, there exist a finite $K$ s.t. $L(\mathbf{w}^K) = 0$
+* **Pros and cons:**
+  * Pros: if data is linearly separable, the perceptron trianing algorithm will converge to a correct solution
+  * Cons: 
+    * The solution may not be optimal, and there are infinitely many possible solutions
+    * If the data is not linearly separable, the training will fail completely rather than give some approx. solution

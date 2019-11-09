@@ -1,7 +1,7 @@
 ### Lecture 1: Introduction Probability Theory
 
 #### Terminologies
-* **Instance**: measurements about individual entities/objects
+* **Instance**: measurements about individual entities/objects (no label)
 * **Attributes**: component of the instances
 * **Label**: an outcome that is categorical, numerical, etc.
 * **Examples**: instance coupled with label
@@ -17,6 +17,7 @@
 
 #### Evaluation
 1. Pick an evaluation metric comparing label v.s. prediction
+   * E.g. Accuracy, Contingency table, Precision-Recall, ROC curves
 2. Procure an independent, labelled test set
 3. "Average" the evaluation metric over the test set
 (When data poor, use cross-validation)
@@ -30,14 +31,15 @@ Probability相关的部分就不写了
 #### Frequentist statistics
 * Unknown params are treated as having fixed but unknown values
 * Parameter estimation:
-  * Classes of models indexed by parameters
-  * Point estimate: a function (or statistic) of data (samples)
-* If T is an estimator for $\theta$
+  * Classes of models $\{ p_{\theta} (x): \theta \in \Theta\}$ indexed by parameters $\Theta$
+  * Point estimate $\hat{\theta}(x_1, ..., x_n)$: a function (or statistic) of data (samples)
+    * A single value as an estimate of a population parameter
+* If $\hat{\theta}$ is an estimator for $\theta$
   * Bias: $Bias_{\theta}(\hat{\theta}) = E_{\theta}[\hat{\theta}] - \theta$
   * Variance: $Var_{\theta}(\hat{\theta}) = E_{\theta}[(\hat{\theta} - E_{\theta}[\hat{\theta}])^2]$
 * Asymptotic properties:
   * Consistency: $\hat{\theta} \rightarrow \theta$ (converges in probability) as $n \rightarrow \infty$
-  * Efficiency: asymptotic variance is as small as possible
+  * Efficiency: asymptotic variance is as small as possible (reach Cramer-Rao lower bound)
 * Maximum-Likelihood Estimation (MLE)
   * General principle for designing estimators
   * Involves optimisation
@@ -49,6 +51,7 @@ Probability相关的部分就不写了
     3. Optimise to find best params
         * Take partial derivatives of log likelihood: $l'(\theta)$
         * Solve $l'(\theta) = 0$
+        * If fail, use iterative gradient method (e.g. fisher scoring)
 
 #### Decision Theory
 * Decision rule: $\delta(x) \in A$ (action space)
@@ -65,10 +68,10 @@ Probability相关的部分就不写了
   * Can't calculate risk directly
   * Don't know the real distribution the samples comes from, therefore don't now $E(X)$
 * **ERM**
-  * Use training set X to approximate $p_\theta$
+  * Use training set X to approximate $p_\theta$ (Empirical)
   * Minimise empirical risk $\hat{R}_\theta[\delta] = \frac{1}{n} \sum_{i=1}^n l(\delta(X_i), \theta)$
 
-#### Mean Squared Error
+#### Mean Squared Error (of parameter estimator)
 * Bias-variance decomposition of **square-loss risk**
 * $E_{\theta}[(\theta - \hat{\theta})^2] = [Bias(\hat{\theta})]^2 + Var_{\theta}(\hat{\theta})$
 
@@ -88,11 +91,14 @@ Probability相关的部分就不写了
     * $P(\theta | X = x) = \frac{P(X = x | \theta)P(\theta)}{P(X = x)}$
   * Marginalization: eliminates unwanted variables
     * $P(X = x) = \sum_t P(X = x, \theta = t)$
-* Bayesian estimation common approaches
+* Bayesian point estimation common approaches
   * Posterior mean
     * $E_{\theta | X}[\theta] = \int \theta P(\theta | X) d\theta$
   * Posterior mode (MAP)
     * $\argmax_\theta P(\theta | X)$
+* MLE in Bayesian context
+  * MLE = MAP if using uniform prior $P(\theta)$
+  * (No prior belief about $\theta$)
 
 #### Categories of Probabilistic Models
 * Parametric v.s. Non-Parametric
@@ -109,5 +115,5 @@ Probability相关的部分就不写了
      * Model full joint $P(X,Y)$
      * E.g. Naive Bayes
   2. Discriminative
-     * Model conditional $P(Y|X)$ only
+     * Model conditional $P(Y|X)$ only (directly)
      * E.g. Linear Regression

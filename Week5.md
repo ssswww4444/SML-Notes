@@ -95,6 +95,7 @@ $$ v = max(u_{11}, u_{12}, ..., u_{mm}) $$
   * since perceptron loss is 0 for all of them
 * **For SVM,** it aim to find the separation boundary that maximises the margin between the classes
 * **Margin** is defined by the **location(b) and orientation(w)** of the separating boundary, which are defined by SVM parameters
+  * Space between two dashed lines
 
 #### Margin width
 * Distance between the hyperplane and the nearest data points
@@ -120,15 +121,17 @@ $$ v = max(u_{11}, u_{12}, ..., u_{mm}) $$
   * Maximise ($\min_{i = 1, ..., n} \frac{y_i(w'x_i + b)}{||w||}$) as a function of $\mathbf{w}$ and $b$
   * Problem: non-unique representation of separating boundary (hyperplane)
     * i.e. can use any $\alpha (w'x + b) = \tilde{w}'x + \tilde{b} = 0$
+    * Infinite number of solutions
   * Possible solution to **resolve ambiguity**: 
   * Measure the distance to the closest point ($i^*$) and rescale param s.t. 
     * margin: $\frac{y_{i^*}(w'x_{i^*} + b)}{||w||} = \frac{1}{||w||}$
     * (Arbitrary set the numerator to 1 to get unique values of $\mathbf{w}$ and $b$)
 * **SVM Objective with extra requirement:**
-  * Extra requirement: $\frac{y_{i^*}(w'x_{i^*} + b)}{||w||} = \frac{1}{||w||}$
+  * Extra requirement: Set margin width = $\frac{y_{i^*}(w'x_{i^*} + b)}{||w||} = \frac{1}{||w||}$
   * $i^*$ denotes index of closest example to boundary
 * Therefore, (hard margin) SVM aims to find:
   * $\argmin_w ||w||$ s.t. $y_i (w'x_i + b) \geq 1$ for $i = 1, ..., n$
+  * Minimum $||w||$ => maximise margin
   * Constraint: perfect separation of points
 
 #### SVM as regularised ERM

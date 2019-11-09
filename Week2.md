@@ -9,8 +9,9 @@
     * $p(y|\mathbf{x}) = \frac{1}{\sqrt{2\pi\sigma^2}}\text{exp}(-\frac{(y-\mathbf{x}\beta)^2}{2\sigma^2})$
 * Unknown param: $\beta$ (and $\sigma^2$)
 * MLE: choose param values that maximise the probability of observed data (likelihood)
-  * "Log trick": instead of maximising likelihood, we can maximise log-likelihood
-* Under this model, MLE is equivalent to minimising SSE
+  * "Log trick": instead of maximising likelihood, we can maximise log-likelihood (since log is strictly monotonic increasing)
+* Under this model ("normal" linear regression):
+  * MLE is equivalent to minimising SSE (or RSS)
 
 #### Optimization
 * Training = Fitting = Parameter estimation
@@ -19,14 +20,16 @@
 * Analytic (aka. closed form) solution
   * 1st order derivatives for optimality:
     * $\frac{\partial L}{\partial \theta_1} = ... = \frac{\partial L}{\partial \theta_p} = 0$
-  * Approximate iterative solution (e.g. IRWLS)
-    * Initialisation: choose starting guess $\mathbf{\theta}^{(1)}$, set $i=1$
-    * Update: $\theta^{(i+1)} \leftarrow SomeRule[\theta^{(i)}]$, set $i \leftarrow i+1$
-    * Termination: decide whether to stop
-    * Go to step 2
-    * Stop: return $\hat{\theta} \approx \theta^{(i)}$
+  * (Need to check 2nd derivative)
+* Approximate iterative solution (e.g. IRWLS)
+  * Initialisation: choose starting guess $\mathbf{\theta}^{(1)}$, set $i=1$
+  * Update: $\theta^{(i+1)} \leftarrow SomeRule[\theta^{(i)}]$, set $i \leftarrow i+1$
+  * Termination: decide whether to stop
+  * Go to step 2
+  * Stop: return $\hat{\theta} \approx \theta^{(i)}$
 
 #### Coordinate descent
+* 一次 update 一个 $\theta_i$
 * Suppose $\theta = [\theta_1, ..., \theta_K]^{T}$
   1. Choose $\theta^{(1)}$ and some $T$
   2. For $i$ from $1$ to $T$ (update all params $T$ times)
@@ -65,9 +68,10 @@
 
 #### Linear Regression optimization: Least Square Method
 * To find $\beta$, minimize the **sum of squared errors**:
-  * $SSE = \sum_{i=1}^n (y_i - \sum_{j=0}^m X_{ij}\beta_{j})^2$
+  * $SSE/RSS = \sum_{i=1}^n (y_i - \sum_{j=0}^m X_{ij}\beta_{j})^2$
 * Setting derivative to zero and solve for $\beta$: (normal equation)
   * $b = (X^TX)^{-1}X^{T}y$
+  * Well defined only if the inverse exists
 
 ---
 
@@ -77,6 +81,7 @@
 * Why not linear regression for classification?
   * Predict "Yes" if $s \geq 0.5$
   * Predict "No" if $s < 0.5$
+  * ($s = x\hat{\beta}$, estimated probability for class 1 given a data point)
   * Reason:
     * Can be susceptible (易受影响) to outliers
     * least-squares criterion looks **unnatural** in this setting
@@ -93,8 +98,12 @@
   * Logistic regression model:
     * $P(Y = 1 | x) = \frac{1}{1 + \text{exp}(-x^T\beta)}$
   * Classification rule:
-    * Class "1" if $P(Y=1 | x) > \frac{1}{2}$, else class "0"
-    * Decision boundary (line): $p = \frac{1}{1 + \text{exp}(-x^T\beta)} = \frac{1}{2}$
+    * Class "1" 
+      * If $P(Y=1 | x) = \frac{1}{\exp(-x^{T}\beta)} > \frac{1}{2}$
+      * Else class "0"
+    * Decision boundary (line): 
+      * $P(Y = 1 | x) = \frac{1}{1 + \text{exp}(-x^T\beta)} = \frac{1}{2}$
+      * Equivalently, $P(Y = 0 | x) = P(Y = 1 | x)$
     * (In higher dimensional problems, the decision boundary is a plane or hyperplane, vector $\beta$ is perpendicular to the decision boundary)
 
 #### Linear v.s. logistic probabilistic models
@@ -102,15 +111,15 @@
   * Assume $\epsilon \sim N(0, \sigma^2)$
   * Therefore assume $y \sim N(X\beta, \sigma^2)$
 * Logistic regression
-  * Assume $y \sim Bernoulli(p)$
+  * Assume $y \sim Bernoulli(p = logistic(x^{T}\beta))$
 
 #### Logistic MLE
-* Doesn't have closed form solution (cannot solve $\frac{\partial L}{\partial \beta} = 0 $ directly)
+* Doesn't have closed form solution (cannot solve $\frac{\partial L}{\partial \beta} = 0$ directly)
 * Therefore use iterative optimisation
   * E.g. Newton-Raphson, IRWLS, or gradient descent
-* Good news: it's a convex problem $\Rightarrow$ guaranteed to get global minimum
+* Good news: it's a convex problem (if no irrelevant features) $\Rightarrow$ guaranteed to get global minimum
 
-#### Information divergence
+#### Information divergence (extra)
 * To **compare models** with different num of params in an all-subsets search
 * May use information theoretic criterion which estimates information divergence between true model and a given candidate model (working model)
 * Best model: **smallest** criterion value
@@ -124,7 +133,7 @@
 * A method for comparing two distiributions
 * A measure of divergence between reference distribution $g_{ref}(a)$ and estiamted distribution $g_{est}(a)$
   * For discrete distribution:
-    * $ H(g_{ref}, g_{est}) = -\sum_{a \in A} g_{ref}(a) log \, g_{est}(a) $
+    * $H(g_{ref}, g_{est}) = -\sum_{a \in A} g_{ref}(a) log \, g_{est}(a)$
 
 #### Training as cross-entropy minimisation
 * Consider log-likelihood for a single data point
@@ -151,7 +160,7 @@
     * $\phi_2(x) = x^2$
   * Quadratic regression (linear in new feature set): 
     * $y = w_0 + w_1 \phi_1(x) + w_2 \phi_2(x) = w_0 + w_1 x + w_2 x^2$
-* Canbe applied for both regression and classification
+* Can be applied for both regression and classification
 * There are many possible choices of $\phi$
 * Binary classification:
   * If dataset not linearly separable (non-linear problem)

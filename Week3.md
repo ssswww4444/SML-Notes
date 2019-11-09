@@ -27,6 +27,7 @@
 * If ill-posed, there is **no closed form solution**
   * Closed form solution $\hat{w} = (X'X)^{-1}X'y$
   * But if irrelevant, $X'X$ has no inverse (singular)
+  * (Even near-irrelevance / colinearity can be problematic)
 
 #### Re-conditioning the problem (Ridge Regression)
 * Make it a well-posed solution and also prevent fitting noise / overfitting
@@ -47,7 +48,7 @@ $$
   W \sim N(0, 1/\lambda)
 $$
 * Higher $\lambda$, more confidence at prior, therefore ignore data more
-* Computing posterior and take MAP
+* Computing posterior and take **MAP**
 $$
   \text{log}(posterior) = \text{log}(likelihood) + \text{log}(prior) - \text{log}(marg)
 $$
@@ -65,6 +66,7 @@ $$
 * Right model class $\Theta$ will sacrifice some traininig error, for test error
 * Choosing model complexity (2 Methods)
   1. Explicit model selection
+       * Choosing degree of polynomial model by CV or held out validation
   2. Regularisation
 
 #### Explicit model selection
@@ -112,9 +114,9 @@ $$
 #### Bias-variance trade-off
 * Model complexity is a major factor that influences the ability of the model to **generalise**
 * Bias-variance decomposition
-  * Risk / test error = $Bias^2 + Variance + Irreducible Error$
+  * Risk / test error = $Bias^2 + Variance + Irreducible Error (noise)$
 $$
-  E[l(Y, \hat{f}(X_0))] = (E[Y] - E[\hat{f}])^2 + Var[\hat{f}] + Var[Y]
+  E[l(Y, \hat{f}(X_0))] = E[(Y - \hat{f})^2] = (E[Y] - E[\hat{f}])^2 + Var[\hat{f}] + Var[Y]
 $$
 * Squared loss for supervised-regression
 $$
@@ -127,7 +129,7 @@ $$
 
 ### Lecture 6: Perceptron
 
-#### Artificial Neural Network
+#### Artificial Neural Network (RNN, CNN, MLP)
 * A network of processing elements
   * Each element converts inputs to output
   * Output: a (activation) function of a **weighted sum** of inputs (linear combination)
@@ -137,10 +139,10 @@ $$
 * Training an ANN $\Rightarrow$ adjusting weights for training data given a pre-defined network topology
 
 #### Perceptron
-* A binary classifier
+* Perceptron is a binary classifier
   * $s = \sum_{i = 0}^m x_i w_i$
     * Predict class A if $s \geq 0$
-    * Predict class B if $s \leq 0$
+    * Predict class B if $s < 0$
 * Loss function
   * Usually don't use 0-1 loss for training, since cannot calculate the gradient
   * Shouldn't give penalty for correctly classified examples
@@ -149,7 +151,7 @@ $$
 ![PERCEPTRON](perceptron.png)
 
 #### Stochastic gradient descent (SGD)
-* Random: shuffling training examples
+* Stochastic = Random: shuffling training examples
 * Randomly shuffle / split all training examples in B batches
 * Choose initial $\theta^{(1)}$
 * For $i$ from 1 to $T$ (epochs)
@@ -175,5 +177,5 @@ $$
 * **Pros and cons:**
   * Pros: if data is linearly separable, the perceptron trianing algorithm will converge to a correct solution
   * Cons: 
-    * The solution may not be optimal, and there are infinitely many possible solutions
+    * There are infinitely many possible solutions
     * If the data is not linearly separable, the training will fail completely rather than give some approx. solution

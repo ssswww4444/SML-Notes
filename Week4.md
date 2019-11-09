@@ -15,9 +15,9 @@
 
 #### ANN
 * Can be naturally adapted to various supervised learning setups (e.g. univariate/multivariate regression, binary/multivariate classification)
-* Capable of approximating plephora non-linear functions
+* Capable of approximating plethora non-linear functions
 * **Universal approximation theorem:** (就是说hidden layer可以approximate各种continuous function)
-  * an ANN with a hidden layer with a finite number of units, and mild assumptions on the activation function, can approximate continuous functions on compact subsets of $R^n$ arbitrarily well
+  * **an ANN with a hidden layer** with a finite number of units, and mild assumptions on the activation function, can approximate continuous functions on compact subsets of $R^n$ arbitrarily well
 * To train your network:
   * Define the loss function and find params that minimise the loss on training data (e.g. use SDG)
 * Loss function for ANN:

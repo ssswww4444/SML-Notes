@@ -17,6 +17,9 @@
 * **Soft-margin SVM loss: (hinge loss)**
   * $l_h = 0$ if prediction correct
   * $l_h = 1 - y(w'x + b) = 1 - y\hat{y}$ if prediction wrong (penalty)
+  * Can be written as: $l_h = max(0, 1 - y_i (w'x_i + b))$
+* Compare with perceptron loss
+  * $L(s,y)=max(0,−sy)$
 
 #### Soft-Margin SVM Objective
 * $\argmin_{\mathbf{w}, b} (\sum_{i = 1}^n l_h(x_i, y, w, b) + \lambda ||w||^2)$
@@ -30,9 +33,9 @@
   * **Then, new objective:**
     * $\argmin_{w,b,\xi} (\frac{1}{2} ||w||^2 + C \sum_{i = 1}^n \xi_i)$ 
     * Constraints:
-      * $\xi \geq 1 - y_i (w'x_i + b)$ for $i = 1, ..., n$
-      * $\xi \geq 0$ for $i = 1, ..., n$
-      * (Penalise based on the size of $\xi$, like having loss function in objective)
+      * $\xi_i \geq 1 - y_i (w'x_i + b)$ for $i = 1, ..., n$
+      * $\xi_i \geq 0$ for $i = 1, ..., n$
+      * (Penalise based on the size of $\xi_i$, like having loss function in objective)
       * **$\xi$ gets pushed down to be equal to $l_h$**
     * C: hyperparameter (have to tune by gridSearch)
 
@@ -42,7 +45,7 @@
   * s.t. $y_i(w'x_i + b) \geq 1$ for $i = 1, ..., n$
 * **Soft-margin SVM objective:**
   * $\argmin_{w,b} \frac{1}{2}||w||^2$
-  * s.t. $y_i(w'x_i + b) \geq 1 - \xi_i$ for $i = 1, ..., n$ and $\xi \geq 0$ for $i = 1, ..., n$ 
+  * s.t. $y_i(w'x_i + b) \geq 1 - \xi_i$ for $i = 1, ..., n$ and $\xi_i \geq 0$ for $i = 1, ..., n$ 
   * The constraints are **relaxed** by allowing violation by $\xi_i$
 
 #### Constraint optimisation
@@ -53,8 +56,8 @@
 * Training SVM is also a constrained optimisation problem
 * Method of **Lagrange multipliers**
   * Transform to unconstrained optimisation
-  * Transform **primal** program to a related **dual** program
-  * Analyze necessary & sufficient conditions for solutions of both program
+  * (Or) Transform **primal** program to a related **dual** program
+    * Analyze necessary & sufficient conditions for solutions of both program
 
 #### Lagrangian and duality
 * **Dual** objective function:
@@ -64,6 +67,7 @@
   * New $\lambda$ and $v$ are called the **Lagrange multipliers** or **dual variables**
 * Primal program: $\min_x \max_{\lambda \geq 0} L(x, \lambda, v)$
 * Dual program: $\max_{\lambda \geq 0, v} \min_{x} L(x, \lambda, v)$
+  * May be easier to solve, advantageous
 * Duality
   * Weak duality: dual optimum $\leq$ primal optimum
   * For convex problem, we have strong duality: optima coincide (same optima for primal and dual)
@@ -74,12 +78,15 @@
   * $\argmax_\lambda \sum_{i = 1}^m \lambda_i - \frac{1}{2}\sum_{i = 1}^n \sum_{j = 1}^n \lambda_i \lambda_j y_i y_j x'_i x_j$
   * s.t. $\lambda_i \geq 0$ and $\sum_i^n \lambda_i y_i = 0$
 * According to strong duality, solve dual <=> solve primal
+* Complexity of solution:
+  * $O(n^3)$ instead of $O(d^3)$
+* Program depends on dot products of data only -> kenel
 
 #### Making predictions with dual solution
 * **Recovering primal variables**
   * From stationarity: get $w_j^*$
     * $w_j^* = \sum_{i = 1}^n \lambda_i y_i (x_i)_j = 0$
-  * From dual solution: (get $b^*$)
+  * From dual solution (complementary slackness): (get $b^*$)
     * $y_j(b^* + \sum_{i = 1}^n \lambda_i^* y_i x'_i x_j) = 1$
     * For any example $j$ with $\lambda_i^* > 0$ **(support vectors)**
 * Make predictions (testing)
@@ -90,7 +97,7 @@
 #### Optimisation for Soft-margin SVM
 * Training: find $\lambda$ that solves (dual)
   * $\argmax_\lambda \sum_{i = 1}^m \lambda_i - \frac{1}{2}\sum_{i = 1}^n \sum_{j = 1}^n \lambda_i \lambda_j y_i y_j x'_i x_j$
-  * s.t. $C \geq \lambda_i \geq 0$ and $\sum_i^n \lambda_i y_i = 0$
+  * s.t. $C \geq \lambda_i \geq 0$ (box constraints) and $\sum_i^n \lambda_i y_i = 0$
   * Where $C$ is a box constraints **(only difference between soft and hard SVM)**
     * Vector $\lambda$ is inside a box of side length $C$
     * Big $C$: penalise more training data, let training data has more influence
@@ -112,3 +119,20 @@
 #### Training SVM
 * Inefficient
 * Many $\lambda$s will be zero (sparsity)
+
+### Lecture 11: Kernel Methods
+
+#### Kernelising the SVM
+* Two ways to handle non-linear data with SVM
+  1. Soft-margin SVM
+  2. Feature space transformation
+     * Map data to a new feature space
+     * Run hard-margin / soft-margin SVM in new feature space
+     * Decision boundary is non-linear in original space
+* Naive workflow
+  1. Choose / design a linear model
+  2. Choose / design a high-dimensional transformation $\phi(x)$
+      * **Hoping** that after adding a lot of various features, some of them will make the daa linearly separable
+  3. For each training example and each new instance, compute $\psi(x)$
+* Problem: impractical / impossible to compute $\psi(x)$ for high / infinite-dimensional $\psi(x)$
+* 

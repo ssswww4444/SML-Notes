@@ -134,5 +134,68 @@
   2. Choose / design a high-dimensional transformation $\phi(x)$
       * **Hoping** that after adding a lot of various features, some of them will make the daa linearly separable
   3. For each training example and each new instance, compute $\psi(x)$
-* Problem: impractical / impossible to compute $\psi(x)$ for high / infinite-dimensional $\psi(x)$
-* 
+* **Problem:** impractical / impossible to compute $\psi(x)$ for high / infinite-dimensional $\psi(x)$
+* **Solution:** Use kernel function
+  * Since both training and prediction process in SVM only depend **dot products** between data points
+  * Before data transformation:
+    * Training: (parameter estimation)
+      * $\argmax_\lambda \Sigma_{i=1}^n - \frac{1}{2}\Sigma_{i=1}^n \Sigma_{j=1}^n \lambda_i \lambda_j y_i y_j \mathbf{x_i'x_j}$
+    * Making prediction: (computing predictions)
+      * $s = b^* + \Sigma_{i=1}^n \lambda_i^* y_i \mathbf{x_i'x}$
+  * After data transformation:
+    * Training: 
+      * $\argmax_\lambda \Sigma_{i=1}^n - \frac{1}{2}\Sigma_{i=1}^n \Sigma_{j=1}^n \lambda_i \lambda_j y_i y_j \mathbf{\phi(x_i)'\phi(x_j)}$
+    * Making predictions:
+      * $s = b^* + \Sigma_{i=1}^n \lambda_i^* y_i \mathbf{\phi(x_i)' \phi(x)}$
+
+#### Kernel representation
+* Kernel:
+  * A function that can be expressed as a dot product in some feature space: $K(u,v) = \psi(u)' \psi(v)$
+* For some $\psi(x)$'s, kernel is faster to compute directly than first mapping to feature space then taking dot product
+  * A "shortcut" function that gives exactly the same answer $K(x_i, x_j) = k_{ij}$
+* Then, SVM becomes:
+  * Training: 
+      * $\argmax_\lambda \Sigma_{i=1}^n - \frac{1}{2}\Sigma_{i=1}^n \Sigma_{j=1}^n \lambda_i \lambda_j y_i y_j \mathbf{K(x_i, x_j)}$
+  * Making predictions:
+    * $s = b^* + \Sigma_{i=1}^n \lambda_i^* y_i \mathbf{K(x_i, x)}$
+
+#### Approaches to non-linearity
+* ANNs:
+  * Elements of $u = \phi(x)$ (second layer neurons) are transformed input $x$
+  * This $\phi$ has weights learned from data
+* SVMs:
+  * Choice of kernel $K$ determines feature $\phi$
+  * Don't learn $\phi$ weights
+  * But, don't even need to compute $\phi$ so can support very high dimensional $\phi$
+  * Also support arbitrary data types
+
+#### Modular learning
+* All information about feature mapping is **concentrated within the kernel**
+* In order to use a different feature mapping -> change the kernel function
+* Algorithm design decouples into:
+  1. Choosing a "learning method" (e.g. SVM v.s. logistic regression)
+  2. Choosing feature space mapping (i.e. kernel)
+* Representer theorem
+  * For any training set ${x_i, y_i}_{i=1}^n$, any empirical risk function $E$, monotonic increasing function $g$, then any solution: 
+    * $f^* \argmin_f E(x_1, y_1, f(x_1), ..., x_n, y_n, f(x_n)) + g(||f||)$ 
+    * has representation for some coefficients: $f^* (x) = \Sigma_{i=1}^n \alpha_i k(x, x_i)$
+  * Tells us when a learner is kernelizable
+  * The dual tells us the form this linear kernel representation takes
+  * (SVM is an example)
+
+#### Constructing kernels
+* Polynomial kernel
+  * $K(u,v) = (u'v + c)^d$
+  * Can add $\sqrt{c}$ as a dummy feature to $u$ and $v$ (dim + 1)
+  * $(u'v)^d = (u_1 v_1 + ... + u_m v_m)^d = \Sigma_{i=1}^l (u_1 v_1)^{a_{i1}}...(u_m v_m)^{a_{im}} = \Sigma_{i=1}^l (u_1^{a_{i1}} ... u_m^{a_{im}}) = \Sigma_{i=1}^l \phi(u)_i \phi(v)_i$
+  * Feature map $\phi$: $\R^m \rightarrow \R^l$, where $\phi_i(x) = (x_1^{a_{i1}}, ..., x_m^{a_{im}})$
+* Identifying new kernels
+  1. Method 1: Let $K_1(u,v), K_2(u,v)$ be kernels, $c > 0$ be a constant, and $f(x)$ be a real-valued function, then each of the following is also a kernel:
+       * $K(u,v) = K_1(u,v) + K_2(u,v)$
+       * $K(u,v) = cK_1(u,v)$
+       * $K(u,v) = f(u)K_1(u,v)f(v)$
+  2. Method 2: Use Mercer's theorem
+       * Consider a finite sequences of objects $x_1, ..., x_n$
+       * Construct $n \times n$ matrix of pairwise values $K(x_i, x_j)$
+       * $K(x_i, x_j)$ is a **valid kernel** if this matrix is **positive semi-definite (PSD)**, and this holds for all possible sequence $x_1, ..., x_n$
+* Remember we need $K(u,v)$ to imply a dot product in some feature space

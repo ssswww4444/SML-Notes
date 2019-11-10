@@ -38,7 +38,7 @@
 <li>A hidden layer can be though of as the <em>transformed feature space</em> (e.g. <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="bold">u</mi><mo>=</mo><mi>ϕ</mi><mo stretchy="false">(</mo><mi mathvariant="bold">x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\mathbf{u} = \phi(\mathbf{x})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44444em;vertical-align:0em;"></span><span class="mord"><span class="mord mathbf">u</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">ϕ</span><span class="mopen">(</span><span class="mord"><span class="mord mathbf">x</span></span><span class="mclose">)</span></span></span></span>)</li>
 <li>Parameters of such a transformation are learned from data</li>
 <li>ANN layers as data transformation:
-<img src="file:////Users/peiyuns/GitHub/SML-Notes/transformation.png" alt="TRANSFORMATION"></li>
+<img src="file:////Users/peiyuns/GitHub/SML-Notes/transformation.png" width="400"></li>
 </ul>
 <h4 id="depth-vs-width">Depth v.s. width</h4>
 <ul>
@@ -53,17 +53,17 @@
 <ul>
 <li>C = 1, (2C+1) is the filter size</li>
 <li>Stride = 1
-<img src="file:////Users/peiyuns/GitHub/SML-Notes/convolution.png" alt="CONVOLUTION"></li>
+<img src="file:////Users/peiyuns/GitHub/SML-Notes/convolution.png" width="400"></li>
 </ul>
 </li>
 <li>For 2D images
-<img src="file:////Users/peiyuns/GitHub/SML-Notes/conv2d.png" alt="CONVOLUTION2D"></li>
+<img src="file:////Users/peiyuns/GitHub/SML-Notes/conv2d.png" width="400"></li>
 <li>For computer vision
 <ul>
 <li>Use 5 filters for 2D convolution</li>
 <li>Downsampling could be Max Pooling</li>
 <li>Use 10 filters for 3D convolution
-<img src="file:////Users/peiyuns/GitHub/SML-Notes/cv.png" alt="COMPUTERVISION"></li>
+<img src="file:////Users/peiyuns/GitHub/SML-Notes/cv.png" width="400"></li>
 </ul>
 </li>
 </ul>
@@ -105,7 +105,7 @@
 <li><strong>Forward pass</strong> records maximising element, which is then used in the backward pass during back-propagation</li>
 </ul>
 <h4 id="convolution-as-a-regulariser">Convolution as a regulariser</h4>
-<p><img src="file:////Users/peiyuns/GitHub/SML-Notes/cv_regular.png" alt="REGULARIZER"></p>
+<img src="file:////Users/peiyuns/GitHub/SML-Notes/cv_regular.png" width="400">
 <h4 id="autoencoder">Autoencoder</h4>
 <ul>
 <li>Given data without labels <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">x_1, ..., x_n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>
@@ -115,7 +115,7 @@
 </ul>
 </li>
 <li>Set bottleneck layer (<strong>representation</strong>) <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi></mrow><annotation encoding="application/x-tex">u</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">u</span></span></span></span> in middle &quot;thinner&quot; than input
-<img src="file:////Users/peiyuns/GitHub/SML-Notes/autoencoder.png" alt="ENCODER"></li>
+<img src="file:////Users/peiyuns/GitHub/SML-Notes/autoencoder.png" width="400"></li>
 </ul>
 <h4 id="bottleneck">Bottleneck</h4>
 <ul>
@@ -182,7 +182,7 @@
 </ul>
 </li>
 <li>Points on margin boundaries called <strong>support vectors</strong>
-<img src="file:////Users/peiyuns/GitHub/SML-Notes/svm.png" alt="SVM"></li>
+<img src="file:////Users/peiyuns/GitHub/SML-Notes/svm.png" width="400"></li>
 </ul>
 <h4 id="svm-parameters">SVM Parameters</h4>
 <ul>

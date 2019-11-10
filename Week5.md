@@ -3,7 +3,7 @@
 #### Deep learning
 * ANNs with a single hidden layer are **universal approximators**
   * E.g. OR, AND, NOT
-* It's efficient to **stack** several hidden layers $\Rightarrow$ Deep neural networks
+* It's efficient to **stack** several hidden layers $\rightarrow$ Deep neural networks
 
 #### Representation learning
 * Consecutive layers form **representations of the input** of increasing complexity
@@ -11,6 +11,7 @@
 * A hidden layer can be though of as the *transformed feature space* (e.g. $\mathbf{u} = \phi(\mathbf{x})$)
 * Parameters of such a transformation are learned from data
 * ANN layers as data transformation:
+  
 <img src="transformation.png" width="400">
 
 #### Depth v.s. width
@@ -30,6 +31,7 @@
   * Use 5 filters for 2D convolution
   * Downsampling could be Max Pooling
   * Use 10 filters for 3D convolution
+  
 <img src="cv.png" width="400">
 
 #### Components of CNN
@@ -101,6 +103,7 @@ $$ v = max(u_{11}, u_{12}, ..., u_{mm}) $$
 * Distance between the hyperplane and the nearest data points
   * therefore, **distance to the nearest red and blue points are the same**
 * Points on margin boundaries called **support vectors**
+  
 <img src="svm.png" width="400">
 
 #### SVM Parameters

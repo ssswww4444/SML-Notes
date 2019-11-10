@@ -49,7 +49,7 @@
   * PCA chooses the **direction** to be a hyperplane that minimise these errors (RSS)
   * Since variance and squared distance have something in common (both sum of squares)
 
-<img src="pca.png" width="400">
+<img src="pic/pca.png" width="400">
 
 #### Additional effect of PCA
 * Consider candidate axes $i$ and $(i+1)$, if there is correlation between them

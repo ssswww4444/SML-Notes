@@ -29,7 +29,7 @@
   * (Unkown) params of the model are:
     * $P(C_j), \mu_j, \Sigma_j$ for $j = 1, ..., k$
   
-  <img src="gmm.png" width="400">
+  <img src="pic/gmm.png" width="400">
 
 #### Clustering as model estimation
 * Clustering now amounts to **finding parameters** of the GMM that "best explain" the observed data
@@ -106,7 +106,7 @@
 * M-step:
   * Take partial derivatives of $Q(\theta, \theta^{(t)})$ with respect to each of the parameters and set the derivatives to 0
   * Obtain new parameter estimates:
-    <img src="maximisation.png" width="400">
+    <img src="pic/maximisation.png" width="400">
   * (Estimates for step (t+1))
 
 #### K-means as a EM for a restricted GMM

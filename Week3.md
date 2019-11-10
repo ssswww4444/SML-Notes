@@ -94,7 +94,7 @@ $$
 #### Regulariser as a constraint
 * Modified problem: 
   * minimise $||y - Xw||_2^2$ subject to $||w||_2^2 \leq \lambda$ for $\lambda > 0$ 
-  <img src="constraint.png" width="500">
+  <img src="pic/constraint.png" width="500">
   * $w^*$ is the solution
   * Lasso encourages solution to sit on the axes
     * Some of the weights are set to zero $\Rightarrow$ solution is sparse
@@ -148,7 +148,7 @@ $$
   * Shouldn't give penalty for correctly classified examples
     * Penalty (loss) = $s$
   * Can be re-written as $L(s,y) = max(0,-sy)$
-<img src="perceptron.png" width="400">
+<img src="pic/perceptron.png" width="400">
 
 #### Stochastic gradient descent (SGD)
 * Stochastic = Random: shuffling training examples

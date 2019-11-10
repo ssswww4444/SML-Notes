@@ -12,7 +12,7 @@
 * Parameters of such a transformation are learned from data
 * ANN layers as data transformation:
   
-<img src="transformation.png" width="400">
+<img src="pic/transformation.png" width="400">
 
 #### Depth v.s. width
 * Width: single infinitely wide layer gives a universal approximator
@@ -24,15 +24,15 @@
 * In this example
   * C = 1, (2C+1) is the filter size
   * Stride = 1
-<img src="convolution.png" width="400">
+<img src="pic/convolution.png" width="400">
 * For 2D images
-<img src="conv2d.png" width="400">
+<img src="pic/conv2d.png" width="400">
 * For computer vision
   * Use 5 filters for 2D convolution
   * Downsampling could be Max Pooling
   * Use 10 filters for 3D convolution
   
-<img src="cv.png" width="400">
+<img src="pic/cv.png" width="400">
 
 #### Components of CNN
 * Convolutional layers
@@ -55,14 +55,14 @@ $$ v = max(u_{11}, u_{12}, ..., u_{mm}) $$
 * **Forward pass** records maximising element, which is then used in the backward pass during back-propagation
 
 #### Convolution as a regulariser
-<img src="cv_regular.png" width="400">
+<img src="pic/cv_regular.png" width="400">
 
 #### Autoencoder
 * Given data without labels $x_1, ..., x_n$
   * Set $y_i \equiv x_i$ (target/output = input)
   * train an ANN to predict $z(x_i) \approx x_i$ (approximate input)
 * Set bottleneck layer (**representation**) $u$ in middle "thinner" than input
-<img src="autoencoder.png" width="400">
+<img src="pic/autoencoder.png" width="400">
 
 #### Bottleneck
 * Manage to train a network that gives a good **restoration** of the original signal $z(x_i) \approx x_i$
@@ -104,7 +104,7 @@ $$ v = max(u_{11}, u_{12}, ..., u_{mm}) $$
   * therefore, **distance to the nearest red and blue points are the same**
 * Points on margin boundaries called **support vectors**
   
-<img src="svm.png" width="400">
+<img src="pic/svm.png" width="400">
 
 #### SVM Parameters
 * The separation boundary is defined by parameters $\mathbf{w}$ and $b$

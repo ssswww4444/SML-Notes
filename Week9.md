@@ -62,19 +62,19 @@
 * **Joint factorisation**
   * $P(X_1, ..., X_k) = \prod_{i=1}^k P(X_i | X_j \in parents(X_i))$
 
-<img src="pgm.png" width="200">
+<img src="pic/pgm.png" width="200">
 
 #### Plate notation
 * Short-hand for repeats
 * Simplifying growing complicated PGM
 
-<img src="plate.png" width="400">
+<img src="pic/plate.png" width="400">
 
 #### PGM: frequentist v.s. Bayesian
 * PGM -> joints
 * Bayesian add: node per param
 
-<img src="bayes.png" width="400">
+<img src="pic/bayes.png" width="400">
 
 #### Undirected PGMs
 * Parameterised by **arbitrary positive valued functions** of the variables and **global normalisation**
@@ -108,7 +108,7 @@
   * and $Z$ is the **normalising** "partition" function
     * $Z = \sum_{a,b,c,d,e,f} \psi_1(a,b) \psi_2(b,c) \psi_3(a,d) \psi_4(d,c,f) \psi_5(d,e)$
 
-<img src="undirected.png" width="400">
+<img src="pic/undirected.png" width="400">
 
 #### Directed to undirected
 * Directed PGM formulated as:
@@ -120,7 +120,7 @@
     * normalisation term trivial, Z = 1
 * Turning D-PGM to U-PGM:
 
-<img src="u-pgm.png" width="400">
+<img src="pic/u-pgm.png" width="400">
 
 #### Why U-PGM
 * Pros:
@@ -167,7 +167,7 @@
     * v.s. HMM's which are generative $P(Q, O)$
     * undirected PGM more general and expressive
 
-<img src="crf.png" width="400">
+<img src="pic/crf.png" width="400">
 
 ### Lecture 17: PGM Probabilistic and Statistical Inference
 
@@ -182,8 +182,8 @@
     * Can distribute the sums as far down as possible: $P(HT)\Sigma_{FG} P(FG) \Sigma_HG P(HG|HT, FG) \Sigma_FA P(FA) P(AS = t | FA, HG)$
 
 #### Elimination algorithm
-<img src="elimination.png" width="400">
-<img src="ea.png" width="400">
+<img src="pic/elimination.png" width="400">
+<img src="pic/ea.png" width="400">
 
 #### Statistical inference on PGMs
 * Learning (tables / params) from data

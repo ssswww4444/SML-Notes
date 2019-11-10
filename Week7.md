@@ -174,4 +174,6 @@
     * More striking when viewed as mean cumulative rewards
   * Notes:
     * Theoretical **regret bounds**, optimal up to multiplicative constant
-    * 
+    * Tunable $\rho > 0$ exploration hyperparam, can replace "2"
+    * Captures different $\epsilon$ rates & bounded rewards outside [0,1]
+    * Many variations e.g. different confidence bounds

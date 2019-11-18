@@ -1,1 +1,1 @@
-Note: Week 8 pdf not working -> refer to HTML file
+
